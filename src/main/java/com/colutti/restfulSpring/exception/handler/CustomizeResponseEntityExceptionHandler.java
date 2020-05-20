@@ -11,7 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.colutti.restfulSpring.exception.ExceptionResponse;
-import com.colutti.restfulSpring.exception.UnsuportedMathOperationException;
+import com.colutti.restfulSpring.exception.ResourceNotFoundException;
 
 
 @ControllerAdvice
@@ -25,7 +25,7 @@ public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExcep
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@ExceptionHandler(UnsuportedMathOperationException.class)
+	@ExceptionHandler(ResourceNotFoundException.class)
 	public final ResponseEntity<ExceptionResponse> handleBadRequestException(Exception ex, WebRequest request){
 		ExceptionResponse exceptionResponse = 
 				new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
