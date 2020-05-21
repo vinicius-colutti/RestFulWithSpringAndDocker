@@ -1,0 +1,1 @@
+INSERT INTO `person` VALUES (6,'Cotia, Sao Paulo, Brazil','Ze','male','Paulo'),(4,'Vargem Grande, Sao Paulo, Brazil','Camila','male','Grozinski'),(7,'Barueri, Sao Paulo, Brazil','Marcos','male','Joao');
