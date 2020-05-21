@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.colutti.restfulSpring.converter.DozerConverter;
+import com.colutti.restfulSpring.converter.custom.PersonConverter;
 import com.colutti.restfulSpring.data.model.Person;
 import com.colutti.restfulSpring.data.vo.PersonVO;
+import com.colutti.restfulSpring.data.vo.v2.PersonVOV2;
 import com.colutti.restfulSpring.exception.ResourceNotFoundException;
 import com.colutti.restfulSpring.repository.PersonRepository;
 
@@ -17,11 +19,20 @@ public class PersonServices {
 	
 	@Autowired
 	PersonRepository repository;
+	
+	@Autowired
+	PersonConverter converter;
 
 	
 	public PersonVO create(PersonVO person) {
 		Person entity = DozerConverter.parseObject(person, Person.class);
 		PersonVO vo = DozerConverter.parseObject(repository.save(entity), PersonVO.class);
+		return vo;
+	}
+	
+	public PersonVOV2 createV2(PersonVOV2 person) {
+		Person entity = converter.converteVoToEntity(person);
+		PersonVOV2 vo = converter.converteEntityToVo(repository.save(entity));
 		return vo;
 	}
 	
