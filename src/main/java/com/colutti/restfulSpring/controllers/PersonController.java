@@ -13,39 +13,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.colutti.restfulSpring.model.Person;
-import com.colutti.restfulSpring.services.PersonService;
+import com.colutti.restfulSpring.data.vo.PersonVO;
+import com.colutti.restfulSpring.services.PersonServices;
 
 @RestController
 @RequestMapping("/person")
 public class PersonController {
 	
 	@Autowired
-	private PersonService services;
+	private PersonServices services;
 	
 	@GetMapping
-	public List<Person> findAll(){
+	public List<PersonVO> findAll(){
 		
 		return services.findAll();
 		
 	}
 	
 	@GetMapping("/{id}")
-	public Person findById(@PathVariable("id") Long id){
+	public PersonVO findById(@PathVariable("id") Long id){
 		
 		return services.findById(id);
 		
 	}
 	
 	@PostMapping
-	public Person create(@RequestBody Person person){
+	public PersonVO create(@RequestBody PersonVO person){
 		
 		return services.create(person);
 		
 	}
 	
 	@PutMapping
-	public Person update(@RequestBody Person person){
+	public PersonVO update(@RequestBody PersonVO person){
 		
 		return services.update(person);
 		
