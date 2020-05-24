@@ -13,7 +13,6 @@ import com.colutti.restfulSpring.serialization.converter.YamlJackson2HttpMessage
 
 
 @Configuration
-@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 	
 	private static final MediaType MEDIA_TYPE_YML = MediaType.valueOf("application/x-yaml");
