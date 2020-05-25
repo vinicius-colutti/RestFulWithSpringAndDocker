@@ -19,6 +19,10 @@ import com.colutti.restfulSpring.data.vo.PersonVO;
 import com.colutti.restfulSpring.data.vo.v2.PersonVOV2;
 import com.colutti.restfulSpring.services.PersonServices;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value="Person Controller", description="Endpoints for controller Persons", tags= {"Persons"})
 @RestController
 @RequestMapping("/person")
 public class PersonController {
@@ -26,6 +30,7 @@ public class PersonController {
 	@Autowired
 	private PersonServices services;
 	
+	@ApiOperation(value = "Find all people recorded")
 	@GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
 	public List<PersonVO> findAll(){
 		
@@ -35,6 +40,7 @@ public class PersonController {
 		
 	}
 	
+	@ApiOperation(value = "Find people with id")
 	@GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/x-yaml"})
 	public PersonVO findById(@PathVariable("id") Long id){
 		
@@ -44,6 +50,7 @@ public class PersonController {
 		
 	}
 	
+	@ApiOperation(value = "Create people")
 	@PostMapping(produces = {"application/json", "application/xml", "application/x-yaml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
 	public PersonVO create(@RequestBody PersonVO person){
 		
@@ -53,6 +60,7 @@ public class PersonController {
 		
 	}
 	
+	@ApiOperation(value = "Create people adding birthDay")
 	@PostMapping(value="/v2", produces = {"application/json", "application/xml", "application/x-yaml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
 	public PersonVOV2 createV2(@RequestBody PersonVOV2 person){
 		
@@ -60,6 +68,7 @@ public class PersonController {
 		
 	}
 	
+	@ApiOperation(value = "Update people")
 	@PutMapping(produces = {"application/json", "application/xml", "application/x-yaml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
 	public PersonVO update(@RequestBody PersonVO person){
 		
@@ -69,6 +78,7 @@ public class PersonController {
 		
 	}
 	
+	@ApiOperation(value = "Delete people")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id){
 		

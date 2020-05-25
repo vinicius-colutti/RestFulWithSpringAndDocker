@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.colutti.restfulSpring.data.vo.BookVO;
 import com.colutti.restfulSpring.services.BookServices;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value="Book Controller", description="Endpoints for controller Books", tags= {"Books"})
 @RestController
 @RequestMapping("/book")
 public class BookController {
@@ -25,6 +29,7 @@ public class BookController {
 	@Autowired
 	private BookServices services;
 	
+	@ApiOperation(value = "Find all books recorded")
 	@GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
 	public List<BookVO> findAll(){
 		
@@ -34,6 +39,7 @@ public class BookController {
 		
 	}
 	
+	@ApiOperation(value = "Find book with id")
 	@GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/x-yaml"})
 	public BookVO findById(@PathVariable("id") Long id){
 		
@@ -43,6 +49,7 @@ public class BookController {
 		
 	}
 	
+	@ApiOperation(value = "Create book")
 	@PostMapping(produces = {"application/json", "application/xml", "application/x-yaml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
 	public BookVO create(@RequestBody BookVO book){
 		
@@ -52,7 +59,7 @@ public class BookController {
 		
 	}
 	
-	
+	@ApiOperation(value = "Update book")
 	@PutMapping(produces = {"application/json", "application/xml", "application/x-yaml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
 	public BookVO update(@RequestBody BookVO book){
 		
@@ -62,6 +69,7 @@ public class BookController {
 		
 	}
 	
+	@ApiOperation(value = "Delete book")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id){
 		
