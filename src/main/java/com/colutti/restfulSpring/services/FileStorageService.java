@@ -6,12 +6,15 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.colutti.restfulSpring.config.FileStorageConfig;
 import com.colutti.restfulSpring.exception.FileStorageException;
+import com.colutti.restfulSpring.exception.MyFileNotFoundException;
 
 @Service
 public class FileStorageService {
@@ -48,6 +51,20 @@ public class FileStorageService {
 		
 	}
 	
+	public Resource loadFileAsResource(String fileName) {
+		try {
+			
+			Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+			Resource resource = new UrlResource(filePath.toUri());
+			if(resource.exists()) {
+				return resource;
+			}else {
+				throw new MyFileNotFoundException("File not found "+fileName);
+			}
+			
+		} catch (Exception e) {
+			throw new MyFileNotFoundException("File not found "+fileName, e);
+		}
+	}
 	
-
 }

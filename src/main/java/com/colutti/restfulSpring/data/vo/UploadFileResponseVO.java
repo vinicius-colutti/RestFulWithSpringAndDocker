@@ -1,7 +1,6 @@
 package com.colutti.restfulSpring.data.vo;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class UploadFileResponseVO implements Serializable {
 
@@ -9,15 +8,22 @@ public class UploadFileResponseVO implements Serializable {
 
 	
 	private String fileName;
-	private Date fileDownloadUri;
-	private Double fileType;
+	private String fileDownloadUri;
+	private String fileType;
 	private long size;
 	
 	
 	public UploadFileResponseVO() {
 		
 	}
-
+	
+	public UploadFileResponseVO(String fileName, String fileDownloadUri, String fileType, long size) {
+		super();
+		this.fileName = fileName;
+		this.fileDownloadUri = fileDownloadUri;
+		this.fileType = fileType;
+		this.size = size;
+	}
 
 	public String getFileName() {
 		return fileName;
@@ -29,22 +35,22 @@ public class UploadFileResponseVO implements Serializable {
 	}
 
 
-	public Date getFileDownloadUri() {
+	public String getFileDownloadUri() {
 		return fileDownloadUri;
 	}
 
 
-	public void setFileDownloadUri(Date fileDownloadUri) {
+	public void setFileDownloadUri(String fileDownloadUri) {
 		this.fileDownloadUri = fileDownloadUri;
 	}
 
 
-	public Double getFileType() {
+	public String getFileType() {
 		return fileType;
 	}
 
 
-	public void setFileType(Double fileType) {
+	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
 
@@ -57,6 +63,6 @@ public class UploadFileResponseVO implements Serializable {
 	public void setSize(long size) {
 		this.size = size;
 	}
-
+	
 	
 }
