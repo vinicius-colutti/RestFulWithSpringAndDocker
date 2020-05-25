@@ -7,6 +7,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +40,12 @@ public class PersonController {
 	@GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
 	public List<PersonVO> findAll(
 			@RequestParam(value="page", defaultValue="0") int page,
-			@RequestParam(value="limit", defaultValue="12") int limit){
+			@RequestParam(value="limit", defaultValue="12") int limit,
+			@RequestParam(value="direction", defaultValue="asc") String direction){
 		
-		Pageable pageable = PageRequest.of(page, limit);
+		Direction sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+		
+		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
 		
 		List<PersonVO> persons = services.findAll(pageable);
 		persons.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
