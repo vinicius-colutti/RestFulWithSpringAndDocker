@@ -22,8 +22,10 @@ import com.colutti.restfulSpring.repository.UserRepository;
 import com.colutti.restfulSpring.security.AccountCredentialsVO;
 import com.colutti.restfulSpring.security.jwt.JwtTokenProvider;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+@Api(value="Auth Controller", description="Endpoints for controller Auth", tags= {"Authenticate"})
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
