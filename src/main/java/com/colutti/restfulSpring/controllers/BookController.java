@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(value="Book Controller", description="Endpoints for controller Books", tags= {"Books"})
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/api/book")
 public class BookController {
 	
 	@Autowired
