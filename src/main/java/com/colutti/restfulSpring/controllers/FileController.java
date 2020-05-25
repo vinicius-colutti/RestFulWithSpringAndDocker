@@ -14,7 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +26,7 @@ import com.colutti.restfulSpring.data.vo.UploadFileResponseVO;
 import com.colutti.restfulSpring.services.FileStorageService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "File Controler")
 @RestController
@@ -38,6 +38,7 @@ public class FileController {
 	@Autowired
 	private FileStorageService fileStorageService;
 	
+	@ApiOperation(value = "Upload File")
 	@PostMapping("/uploadFile")
 	public UploadFileResponseVO uploadFile(@RequestParam("file") MultipartFile file) {
 		
@@ -53,6 +54,7 @@ public class FileController {
 		
 	}
 	
+	@ApiOperation(value = "Upload Multiple files")
 	@PostMapping("/uploadMultipleFiles")
 	public List<UploadFileResponseVO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
 		return Arrays.asList(files)
@@ -61,6 +63,7 @@ public class FileController {
 				.collect(Collectors.toList());
 	}
 	
+	@ApiOperation(value = "Download File")
 	@GetMapping("/downloadFile/{fileName:.+}")
 	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request){
 		
