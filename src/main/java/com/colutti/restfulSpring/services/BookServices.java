@@ -1,8 +1,8 @@
 package com.colutti.restfulSpring.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.colutti.restfulSpring.converter.DozerConverter;
@@ -60,10 +60,16 @@ public class BookServices {
 		return DozerConverter.parseObject(entity, BookVO.class);
 	}
 	
-	public List<BookVO> findAll(){
+	public Page<BookVO> findAll(Pageable pageable){
 		
-		return DozerConverter.parseListObjects(repository.findAll(), BookVO.class);
+		Page<Book> page = repository.findAll(pageable);
 		
+		return page.map(this::convertToBookVO);
+		
+	}
+	
+	private BookVO convertToBookVO(Book entity) {
+		return DozerConverter.parseObject(entity, BookVO.class);
 	}
 
 

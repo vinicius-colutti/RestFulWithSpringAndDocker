@@ -1,7 +1,5 @@
 package com.colutti.restfulSpring.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -84,12 +82,16 @@ public class PersonServices {
 		return DozerConverter.parseObject(entity, PersonVO.class);
 	}
 	
-	public List<PersonVO> findAll(Pageable pageable){
+	public Page<PersonVO> findAll(Pageable pageable){
 		
-		List<Person> entities = repository.findAll(pageable).getContent();
+		Page<Person> page = repository.findAll(pageable);
 		
-		return DozerConverter.parseListObjects(entities, PersonVO.class);
+		return page.map(this::convertToPersonVO);
 		
+	}
+	
+	private PersonVO convertToPersonVO(Person entity) {
+		return DozerConverter.parseObject(entity, PersonVO.class);
 	}
 
 
