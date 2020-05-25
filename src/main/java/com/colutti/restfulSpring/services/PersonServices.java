@@ -3,6 +3,8 @@ package com.colutti.restfulSpring.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,9 +84,11 @@ public class PersonServices {
 		return DozerConverter.parseObject(entity, PersonVO.class);
 	}
 	
-	public List<PersonVO> findAll(){
+	public List<PersonVO> findAll(Pageable pageable){
 		
-		return DozerConverter.parseListObjects(repository.findAll(), PersonVO.class);
+		List<Person> entities = repository.findAll(pageable).getContent();
+		
+		return DozerConverter.parseListObjects(entities, PersonVO.class);
 		
 	}
 
