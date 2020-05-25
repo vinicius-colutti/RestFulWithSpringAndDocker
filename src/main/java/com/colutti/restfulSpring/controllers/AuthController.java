@@ -41,7 +41,7 @@ public class AuthController {
 	
 	@ApiOperation(value = "Authenticate a user by credentials")
 	@PostMapping(value= "/signin", produces = {"application/json", "application/xml", "application/x-yaml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
-	public ResponseEntity signin(@RequestBody AccountCredentialsVO data){
+	public ResponseEntity<?> signin(@RequestBody AccountCredentialsVO data){
 		try {
 			
 			String username = data.getUsername();

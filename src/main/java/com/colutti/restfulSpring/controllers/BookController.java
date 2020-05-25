@@ -37,12 +37,14 @@ public class BookController {
 	@Autowired
 	private BookServices services;
 	
+	@Autowired
+	private PagedResourcesAssembler<BookVO> assembler;
+	
 	@ApiOperation(value = "Find all books recorded")
 	@GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
-	public ResponseEntity<PagedResources<BookVO>> findAll(@RequestParam(value="page", defaultValue="0") int page,
+	public ResponseEntity<?> findAll(@RequestParam(value="page", defaultValue="0") int page,
 			@RequestParam(value="limit", defaultValue="12") int limit,
-			@RequestParam(value="direction", defaultValue="asc") String direction,
-			PagedResourcesAssembler assembler){
+			@RequestParam(value="direction", defaultValue="asc") String direction){
 		
 		Direction sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
 		
@@ -50,9 +52,30 @@ public class BookController {
 		
 		Page<BookVO> books = services.findAll(pageable);
 		books.stream().forEach(p -> p.add(linkTo(methodOn(BookController.class).findById(p.getKey())).withSelfRel()));
-		return new ResponseEntity<>(assembler.toResource(books), HttpStatus.OK);
+		PagedResources<?> resources = assembler.toResource(books);
+		return new ResponseEntity<>(resources, HttpStatus.OK);
 		
 	}
+	
+	@ApiOperation(value = "Find books by title")
+	@GetMapping(value = "/findBookByTitle/{title}", produces = {"application/json", "application/xml", "application/x-yaml"})
+	public ResponseEntity<?> findBookByTitle(
+			@PathVariable("title") String title,
+			@RequestParam(value="page", defaultValue="0") int page,
+			@RequestParam(value="limit", defaultValue="12") int limit,
+			@RequestParam(value="direction", defaultValue="asc") String direction){
+		
+		Direction sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+		
+		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "title"));
+		
+		Page<BookVO> books = services.findBookByTitle(title, pageable);
+		books.stream().forEach(p -> p.add(linkTo(methodOn(BookController.class).findById(p.getKey())).withSelfRel()));
+		PagedResources<?> resources = assembler.toResource(books);
+		return new ResponseEntity<>(resources, HttpStatus.OK);
+		
+	}
+	
 	
 	@ApiOperation(value = "Find book with id")
 	@GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/x-yaml"})

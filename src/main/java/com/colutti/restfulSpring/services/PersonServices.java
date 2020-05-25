@@ -90,6 +90,14 @@ public class PersonServices {
 		
 	}
 	
+	public Page<PersonVO> findPersonByName(String firstName, Pageable pageable){
+		
+		Page<Person> page = repository.findPersonByName(firstName, pageable);
+		
+		return page.map(this::convertToPersonVO);
+		
+	}
+	
 	private PersonVO convertToPersonVO(Person entity) {
 		return DozerConverter.parseObject(entity, PersonVO.class);
 	}

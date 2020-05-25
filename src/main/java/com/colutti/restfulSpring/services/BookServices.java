@@ -68,6 +68,14 @@ public class BookServices {
 		
 	}
 	
+	public Page<BookVO> findBookByTitle(String title, Pageable pageable){
+		
+		Page<Book> page = repository.findBookByTitle(title, pageable);
+		
+		return page.map(this::convertToBookVO);
+		
+	}
+	
 	private BookVO convertToBookVO(Book entity) {
 		return DozerConverter.parseObject(entity, BookVO.class);
 	}
