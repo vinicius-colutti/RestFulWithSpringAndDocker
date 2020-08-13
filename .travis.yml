@@ -2,6 +2,7 @@ language: bash
 services: docker
 before_install: 
     - cd ..
+    - pwd
     - echo "Estou no docker compose"
 script:
     - docker-compose build 
