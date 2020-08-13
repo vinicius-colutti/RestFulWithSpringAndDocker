@@ -13,6 +13,6 @@ deploy:
         docker push vcolutti/mysql-rest-with-spring-boot-udemy;
         docker push vcolutti/rest-with-spring-boot-udemy; 
     on:
-        branch: master
+        branch: docker-build
 notifications:
     email: false            
