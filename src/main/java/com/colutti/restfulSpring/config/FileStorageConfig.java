@@ -2,6 +2,7 @@ package com.colutti.restfulSpring.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+
 @ConfigurationProperties(prefix= "file")
 public class FileStorageConfig {
 	
