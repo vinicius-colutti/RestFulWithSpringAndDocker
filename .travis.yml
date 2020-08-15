@@ -24,7 +24,7 @@ deploy:
         docker push vcolutti/rest-with-spring-boot-udemy:$TRAVIS_JOB_ID;
     on:
         tags: false
-        all_branches: true
+        branch: travis-ci-3
 after_success:
     - sudo apt-get -y install python3-pip python-dev
     - sudo pip3 install -U setuptools
