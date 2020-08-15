@@ -23,7 +23,7 @@ deploy:
         docker tag rest-with-spring-boot-udemy:latest vcolutti/rest-with-spring-boot-udemy:$TRAVIS_JOB_ID;
         docker push vcolutti/rest-with-spring-boot-udemy:$TRAVIS_JOB_ID;
     on:
-        tags: true
+        tags: false
         all_branches: true
 after_success:
     - sudo apt-get -y install python3-pip python-dev
