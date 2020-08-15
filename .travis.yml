@@ -1,18 +1,48 @@
-language: bash
+sudo: required
+dist: bionic
+language: java
+jdk:
+    -oraclejdk8
+python:
+    - "3.6"    
 services: docker
 before_install: 
-    - cd RestFulWithSpringAndDocker
-    - echo "Estou no docker compose"
+    - cd /Users/Colutti/Documents/ProjetosJava/RestFulWithSpringAndDocker/RestFulWithSpringAndDocker
+    - echo "Estou no docker compose 222"
+    - mvn clean package
+    - cd ..
+    - echo "We are in the docker folder"
 script:
-    - docker-compose build 
+    - echo "ok here we go"
+    - docker-compose build
 before_deploy:
     - echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
 deploy:
     provider: script
     script:
-        docker push vcolutti/mysql-rest-with-spring-boot-udemy;
-        docker push vcolutti/rest-with-spring-boot-udemy; 
+        docker tag rest-with-spring-boot-udemy:latest vcolutti/rest-with-spring-boot-udemy:$TRAVIS_JOB_ID;
+        docker push vcolutti/rest-with-spring-boot-udemy:$TRAVIS_JOB_ID;
     on:
-        branch: travis-ci
+        branch: travis-ci-v2
+after_success:
+    - sudo apt-get -y install python3-pip python-dev
+    - sudo pip3 install -U setuptools
+    - sudo pip3 install -U virtualenvwrapper
+    - python3 -V
+    - pip3 -V 
+    - pip3 uninstall wheel
+    - pip3 install wheel
+    - pip3 install aws-cli --upgrade --user 
+    - export PATH=$PATH:$HOME/.local/bin
+    - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 731877573738.dkr.ecr.us-east-1.amazonaws.com
+    - docker tag rest-with-spring-boot-udemy:latest $IMAGE_REPO_URL:$TRAVIS_JOB_ID
+    - docker push $IMAGE_REPO_URL:$TRAVIS_JOB_ID
+    - add-apt-repository ppa:eugenesan/ppa
+    - apt-get update
+    - apt-get install jq -y
+    - curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | sudo tee -a /usr/bin/ecs-deploy
+    - sudo chmod +x /usr/bin/ecs-deploy
+    - echo "AWS ECS-Deploy Setup is Configured"
+    - ecs-deploy -c $CLUSTER_NAME -n $SERVICE_NAME -i $IMAGE_REPO_URL:$TRAVIS_JOB_ID -r $AWS_DEFAULT_REGION -t 240
 notifications:
     email: false            
