@@ -7,7 +7,7 @@ python:
     - "3.6"    
 services: docker
 before_install: 
-    - cd /Users/Colutti/Documents/ProjetosJava/RestFulWithSpringAndDocker/RestFulWithSpringAndDocker
+    - cd RestFulWithSpringAndDocker
     - echo "Estou no docker compose 222"
     - mvn clean package
     - cd ..
