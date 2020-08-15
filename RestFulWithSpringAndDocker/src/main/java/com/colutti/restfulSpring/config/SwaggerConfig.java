@@ -28,7 +28,7 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfo("RestFul API by Colutti",
+		return new ApiInfo("RestFul API by VColutti",
 				"A  complete project, using SpringBoot, Docker, JWT,"
 				+ " HATEOAS, Swagger and all good practices!", "v1",
 				"https://github.com/vinicius-colutti/RestFulWithSpringAndDocker",
