@@ -36,8 +36,8 @@ after_success:
     - pip3 install aws-cli --upgrade --user 
     - export PATH=$PATH:$HOME/.local/bin
     - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 731877573738.dkr.ecr.us-east-1.amazonaws.com
-    - docker tag rest-with-spring-boot-udemy:latest 731877573738.dkr.ecr.us-east-1.amazonaws.com/rest-with-spring-boot-udemy:latest:$TRAVIS_JOB_ID
-    - docker push 731877573738.dkr.ecr.us-east-1.amazonaws.com/rest-with-spring-boot-udemy:latest:$TRAVIS_JOB_ID
+    - docker tag rest-with-spring-boot-udemy:latest 731877573738.dkr.ecr.us-east-1.amazonaws.com/rest-with-spring-boot-udemy:$TRAVIS_JOB_ID
+    - docker push 731877573738.dkr.ecr.us-east-1.amazonaws.com/rest-with-spring-boot-udemy:$TRAVIS_JOB_ID
     - add-apt-repository ppa:eugenesan/ppa
     - apt-get update
     - apt-get install jq -y
